@@ -1,6 +1,7 @@
 package models
 
 import com.redis._
+import play.api.Play.current
 
 case class Sample(name: String, id: Long)
 
@@ -9,8 +10,13 @@ object Sample {
   // key to use for this collection in Redis
   private val sampleKey = "samples"
 
+  private val config = current.configuration
+
+  private val redisHost = config.getString("janrain.firehose.redis.host").getOrElse("localhost")
+  private val redisPort = config.getInt("janrain.firehose.redis.port").getOrElse(6379)
+
   // not a good idea, but making it a singleton for simplicity
-  private lazy val client = new RedisClient("localhost", 6379)
+  private lazy val client = new RedisClient(redisHost, redisPort)
 
   def add(sample: Sample) {
     client.hset(sampleKey, sample.id, sample.name)
