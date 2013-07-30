@@ -1,0 +1,24 @@
+@(samples: Iterable[Sample])(implicit flash: Flash)
+
+@main("Sample List"){
+  <h2>Samples</h2>
+  @if(samples.isEmpty) {
+      <em>No Samples Defined</em>
+  }
+  <table class="table table-striped table-bordered">
+      <thead>
+          <tr><th>ID</th><th>Name</th></tr>
+      </thead>
+      <tbody>
+      @for(sample ← samples) {
+        <tr><td>@sample.id</td><td>@sample.name</td></tr>
+      }
+      </tbody>
+  </table>
+
+  <p>
+      <a href="@controllers.routes.Samples.newSample()" class="btn">
+          <i class="icon-plus"></i> New Sample
+      </a>
+  </p>
+}

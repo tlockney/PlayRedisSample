@@ -1,0 +1,16 @@
+@(sampleForm: Form[Sample])(implicit flash: Flash)
+@import helper._
+@import helper.twitterBootstrap._
+
+@main("New Sample") {
+    <h2>Edit Sample</h2>
+
+    @helper.form(action = routes.Samples.save()) {
+        <fieldset>
+            <legend>New Sample</legend>
+            @helper.inputText(sampleForm("id"))
+            @helper.inputText(sampleForm("name"))
+        </fieldset>
+        <p><input type="submit" class="btn primary" value="Save"/></p>
+    }
+}
